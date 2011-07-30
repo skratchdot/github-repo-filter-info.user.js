@@ -69,8 +69,8 @@ var main = function () {
 		jQuery('.filter-bar').find('*').each(function(i) {
 			var events = jQuery(this).data('events');
 			if(typeof events !== 'undefined') {
-				for (var eventList in events) {
-					for (var event in eventList) {
+				jQuery.each(events, function(j, eventList) {
+					jQuery.each(eventList, function(k, event) {
 						if(event.type === 'click' || event.type === 'keyup') {
 							var original = event.handler;
 							event.handler = function() {
@@ -79,8 +79,8 @@ var main = function () {
 								return result;
 							}
 						}
-					}
-				}
+					});
+				});
 			}
 		});
 
