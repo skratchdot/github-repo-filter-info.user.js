@@ -51,7 +51,7 @@ var main = function () {
 	// onDomReady : setup our page
 	jQuery(document).ready(function() {
 		// Create our information div
-		jQuery('.filter-bar').after(
+		jQuery('div.js-repo-filter .filter-bar').after(
 			jQuery('<div></div>')
 				.attr('id', 'skratchdotOnRepoFilterDiv')
 				.css('background', 'none repeat scroll 0 0 #FAFAFB')
