@@ -27,11 +27,11 @@ number of forks (and times forked) for all the visible repos.
 
 ### Screenshots ###
 
-Before installing the user script:  
+#### Before installing the user script: ####
   
 ![Screenshot 1](https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/images/screen1.gif)
   
-After installing the user script:  
+#### After installing the user script: ####
   
 ![Screenshot 2](https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/images/screen2.gif)
   
