@@ -3,11 +3,21 @@
 // @namespace      https://github.com/skratchdot/github-repo-filter-info.user.js
 // @description    A user script to display some additional info below the repository filter on a user's main GitHub page.
 // @include        https://github.com/*
+// @match          https://github.com/*
+// @run-at         document-end
+// @icon           http://skratchdot.com/favicon.ico
+// @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
+// @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
+// @version        1.0
 // ==/UserScript==
+/*global jQuery */
+/*jslint browser: true, unparam: true */
 
 var main = function () {
+	'use strict';
+
 	// Declare a namespace to store functions in
-	var SKRATCHDOT = SKRATCHDOT || {};
+	var SKRATCHDOT = window.SKRATCHDOT || {};
 
 	// This will store jQuery object for the div we are injecting info into
 	SKRATCHDOT.onRepoFilterDiv = null;
@@ -25,31 +35,30 @@ var main = function () {
 		window.clearTimeout(SKRATCHDOT.onRepoFilterTimeout);
 
 		// show filter info (after delay)
-		SKRATCHDOT.onRepoFilterTimeout = window.setTimeout(function() {
+		SKRATCHDOT.onRepoFilterTimeout = window.setTimeout(function () {
 			var total = 0, forks = 0, forked = 0;
 
 			// Calculate counts
-			jQuery('ul.repo_list > li:visible').each(function(i) {
-				var elem = $(this);
-				total++;
-				if(elem.hasClass('fork')) {
-					forks++;
+			jQuery('ul.repo_list > li:visible').each(function (i) {
+				var elem = jQuery(this);
+				total = total + 1;
+				if (elem.hasClass('fork')) {
+					forks = forks + 1;
 				}
 				forked += parseInt(elem.find('li.forks a').text(), 10);
 			});
 
 			// Display counts
-			SKRATCHDOT.onRepoFilterDiv.html(''
-				+ 'Now Showing <b>' + total + '</b> Repos ('
-				+ 'Forks: <b>' + forks + '</b>, '
-				+ 'Forked: <b>' + forked + '</b>)'
-			);
+			SKRATCHDOT.onRepoFilterDiv.html('Now Showing <b>' + total + '</b> Repos (' +
+				'Forks: <b>' + forks + '</b>, ' +
+				'Forked: <b>' + forked + '</b>)'
+				);
 
 		}, delay);
 	};
 
 	// onDomReady : setup our page
-	jQuery(document).ready(function() {
+	jQuery(document).ready(function () {
 		// Create our information div
 		jQuery('div.js-repo-filter .filter-bar').after(
 			jQuery('<div></div>')
@@ -66,18 +75,18 @@ var main = function () {
 		SKRATCHDOT.onRepoFilterDiv = jQuery('#skratchdotOnRepoFilterDiv');
 
 		// After every event in filter-bar, call SKRATCHDOT.onRepoFilter();
-		jQuery('.filter-bar').find('*').each(function(i) {
+		jQuery('.filter-bar').find('*').each(function (i) {
 			var events = jQuery(this).data('events');
-			if(typeof events !== 'undefined') {
-				jQuery.each(events, function(j, eventList) {
-					jQuery.each(eventList, function(k, event) {
-						if(event.type === 'click' || event.type === 'keyup') {
+			if (typeof events !== 'undefined') {
+				jQuery.each(events, function (j, eventList) {
+					jQuery.each(eventList, function (k, event) {
+						if (event.type === 'click' || event.type === 'keyup') {
 							var original = event.handler;
-							event.handler = function() {
+							event.handler = function () {
 								var result = original.apply(this, arguments);
 								SKRATCHDOT.onRepoFilter();
 								return result;
-							}
+							};
 						}
 					});
 				});
@@ -85,7 +94,7 @@ var main = function () {
 		});
 
 		// Simulate a filter event to "initially populate" the info div
-		SKRATCHDOT.onRepoFilter();		
+		SKRATCHDOT.onRepoFilter();
 	});
 };
 
