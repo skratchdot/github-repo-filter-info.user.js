@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        1.0
+// @version        1.1
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true */
@@ -36,23 +36,39 @@ var main = function () {
 
 		// show filter info (after delay)
 		SKRATCHDOT.onRepoFilterTimeout = window.setTimeout(function () {
-			var total = 0, forks = 0, forked = 0;
+			var total = 0, forks = 0, watchers = 0, languages = {}, language = '';
 
 			// Calculate counts
 			jQuery('ul.repo_list > li:visible').each(function (i) {
-				var elem = jQuery(this);
+				var elem = jQuery(this),
+					language = '';
 				total = total + 1;
-				if (elem.hasClass('fork')) {
-					forks = forks + 1;
+				forks += parseInt(elem.find('li.forks a').text(), 10);
+				watchers += parseInt(elem.find('li.watchers a').text(), 10);
+				language = elem.find('li:first').not('.forks, .watchers').text();
+				if (language === '') {
+					language = 'Unknown';
 				}
-				forked += parseInt(elem.find('li.forks a').text(), 10);
+				if (!languages.hasOwnProperty(language)) {
+					languages[language] = 0;
+				}
+				languages[language] = languages[language] + 1;
 			});
 
 			// Display counts
-			SKRATCHDOT.onRepoFilterDiv.html('Now Showing <b>' + total + '</b> Repos (' +
-				'Forks: <b>' + forks + '</b>, ' +
-				'Forked: <b>' + forked + '</b>)'
-				);
+			SKRATCHDOT.onRepoFilterDiv.find('.left').html('Now Showing <b>' + total + '</b> Repos');
+			SKRATCHDOT.onRepoFilterDiv.find('.skratchdot-count-forks').text(forks);
+			SKRATCHDOT.onRepoFilterDiv.find('.skratchdot-count-watchers').text(watchers);
+			SKRATCHDOT.onRepoFilterDiv.find('table tbody').empty();
+			// Show languages
+			for (language in languages) {
+				if (languages.hasOwnProperty(language)) {
+					SKRATCHDOT.onRepoFilterDiv.find('table tbody').append('<tr><td align="right" style="padding-right:10px">' +
+						language + '</td><td align="right">' +
+						((languages[language] / total) * 100).toFixed(1) + ' %' +
+						'</td></tr>');
+				}
+			}
 
 		}, delay);
 	};
@@ -69,10 +85,34 @@ var main = function () {
 				.css('margin-bottom', '10px')
 				.css('padding', '10px')
 				.css('text-align', 'center')
+				.append('<div class="left" />')
+				.append('<div class="right">' +
+					'<div>' +
+					'<a class="skratchdot-languages" href="javascript:void(0)" style="font-size:.8em;padding:5px;">show languages</a>' +
+					'<span class="mini-icon mini-icon-watchers"></span>' +
+					'<span class="skratchdot-count-watchers" style="padding:0px 5px;"></span>' +
+					'<span class="mini-icon mini-icon-fork"></span>' +
+					'<span class="skratchdot-count-forks" style="padding:0px 5px;"></span>' +
+					'</div><div style="float:right">' +
+					'<table style="display:none"><thead><tr><th style="padding-right:10px">Language</th><th>Usage</th></tr></thead><tbody></tbody></table>' +
+					'</div></div>')
+				.append('<div class="clear" />')
 		);
 
 		// Store a reference to our information div
 		SKRATCHDOT.onRepoFilterDiv = jQuery('#skratchdotOnRepoFilterDiv');
+
+		// Attach a click event to show/hide language usage
+		SKRATCHDOT.onRepoFilterDiv.click(function (e) {
+			e.preventDefault();
+			if (SKRATCHDOT.onRepoFilterDiv.find('table:visible').length > 0) {
+				SKRATCHDOT.onRepoFilterDiv.find('.skratchdot-languages').text('show languages');
+				SKRATCHDOT.onRepoFilterDiv.find('table').hide();
+			} else {
+				SKRATCHDOT.onRepoFilterDiv.find('.skratchdot-languages').text('hide languages');
+				SKRATCHDOT.onRepoFilterDiv.find('table').show();
+			}
+		});
 
 		// After every event in filter-bar, call SKRATCHDOT.onRepoFilter();
 		jQuery('.filter-bar').find('*').each(function (i) {
