@@ -6,7 +6,8 @@ User Script : GitHub Repo-Filter Info
 This is a user script to display some additional info below
 the repository filter on a user's main GitHub page.  It will
 show the current number of visible repositories, as well as the
-number of forks (and times forked) for all the visible repos.
+number of watchers and forks for all the visible repos. It will
+also display a language breakdown for the visible repositories.
 
 
 ### Installation ###
@@ -22,11 +23,15 @@ number of forks (and times forked) for all the visible repos.
 ### Screenshots ###
 
 #### Before installing the user script: ####
-  
-![Screenshot 1](https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/images/screen1.gif)
-  
+
+![Before Installation](https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/images/before.png)  
+
 #### After installing the user script: ####
-  
-![Screenshot 2](https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/images/screen2.gif)
-  
+
+**Language breakdown is hidden:**  
+![After Installation - Account exists](https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/images/after1.png)  
+
+**Language breakdown is shown:**  
+![After Installation - Account doesn't exist](https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/images/after2.png)  
+
   
