@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        1.2
+// @version        1.3
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
@@ -92,8 +92,8 @@ var main = function () {
 					((language.count / total) * 100).toFixed(1) + ' %' +
 					'</td>' +
 					'<td align="center" style="padding-right:10px">' + language.count + '</td>' +
-					'<td align="center" style="padding-right:10px">' + language.forks + '</td>' +
 					'<td align="center" style="padding-right:10px">' + language.watchers + '</td>' +
+					'<td align="center" style="padding-right:10px">' + language.forks + '</td>' +
 					'</tr>');
 			}
 
@@ -125,8 +125,8 @@ var main = function () {
 					'<th style="padding-right:10px">Language</th>' +
 					'<th style="padding-right:10px">Usage</th>' +
 					'<th style="padding-right:10px">Repos</th>' +
-					'<th style="padding-right:10px">Forks</th>' +
 					'<th style="padding-right:10px">Watchers</th>' +
+					'<th style="padding-right:10px">Forks</th>' +
 					'</tr></thead><tbody></tbody></table>' +
 					'</div>')
 				.append('<div class="clear" />')
