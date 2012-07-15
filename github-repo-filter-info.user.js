@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        1.3
+// @version        1.4
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
@@ -43,8 +43,8 @@ var main = function () {
 			jQuery('ul.repo_list > li:visible').each(function (i) {
 				var elem = jQuery(this),
 					languageName = '',
-					forkCount = parseInt(elem.find('li.forks a').text(), 10),
-					watcherCount = parseInt(elem.find('li.watchers a').text(), 10);
+					forkCount = parseInt(elem.find('li.forks a').text().replace(',', ''), 10),
+					watcherCount = parseInt(elem.find('li.watchers a').text().replace(',', ''), 10);
 				total = total + 1;
 				forks += forkCount;
 				watchers += watcherCount;
