@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        1.4
+// @version        1.5
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
@@ -80,7 +80,7 @@ var main = function () {
 
 			// Sort Array
 			languageArray.sort(function (a, b) {
-				return b.count === a.count ? a.name > b.name : b.count > a.count;
+				return b.count - a.count || a.name > b.name;
 			});
 
 			// Show languages
