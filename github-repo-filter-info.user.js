@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        1.5
+// @version        1.6
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
@@ -44,11 +44,11 @@ var main = function () {
 				var elem = jQuery(this),
 					languageName = '',
 					forkCount = parseInt(elem.find('li.forks a').text().replace(',', ''), 10),
-					watcherCount = parseInt(elem.find('li.watchers a').text().replace(',', ''), 10);
+					watcherCount = parseInt(elem.find('li.stargazers a').text().replace(',', ''), 10);
 				total = total + 1;
 				forks += forkCount;
 				watchers += watcherCount;
-				languageName = elem.find('li:first').not('.forks, .watchers').text();
+				languageName = elem.find('li:first').not('.forks, .stargazers').text();
 				if (languageName === '') {
 					languageName = 'Unknown';
 				}
@@ -149,7 +149,11 @@ var main = function () {
 
 		// After every event in filter-bar, call SKRATCHDOT.onRepoFilter();
 		jQuery('.filter-bar').find('*').each(function (i) {
-			var events = jQuery(this).data('events');
+			// NOTE: this is undocumented. Should move to $.Event().
+			// $.data('events') was removed in jQuery 1.8
+			// see: http://blog.jquery.com/2011/11/08/building-a-slimmer-jquery/
+			// see: https://github.com/jquery/jquery/commit/24e416dca36df4b182a612dba37f8b6cdaa25916
+			var events = jQuery._data(this, 'events');
 			if (typeof events !== 'undefined') {
 				jQuery.each(events, function (j, eventList) {
 					jQuery.each(eventList, function (k, event) {
