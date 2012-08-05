@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        1.6
+// @version        1.7
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
@@ -44,11 +44,11 @@ var main = function () {
 				var elem = jQuery(this),
 					languageName = '',
 					forkCount = parseInt(elem.find('li.forks a').text().replace(',', ''), 10),
-					watcherCount = parseInt(elem.find('li.stargazers a').text().replace(',', ''), 10);
+					watcherCount = parseInt(elem.find('li.stargazers a, li.watchers a').text().replace(',', ''), 10);
 				total = total + 1;
 				forks += forkCount;
 				watchers += watcherCount;
-				languageName = elem.find('li:first').not('.forks, .stargazers').text();
+				languageName = elem.find('li:first').not('.forks, .stargazers, .watchers').text();
 				if (languageName === '') {
 					languageName = 'Unknown';
 				}
