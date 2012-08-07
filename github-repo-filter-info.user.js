@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        1.7
+// @version        1.8
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
@@ -36,7 +36,7 @@ var main = function () {
 
 		// show filter info (after delay)
 		SKRATCHDOT.onRepoFilterTimeout = window.setTimeout(function () {
-			var i = 0, total = 0, forks = 0, watchers = 0,
+			var i = 0, total = 0, forks = 0, starred = 0,
 				languageHash = {}, languageArray = [], languageName = '', language = {};
 
 			// Calculate counts
@@ -44,10 +44,10 @@ var main = function () {
 				var elem = jQuery(this),
 					languageName = '',
 					forkCount = parseInt(elem.find('li.forks a').text().replace(',', ''), 10),
-					watcherCount = parseInt(elem.find('li.stargazers a, li.watchers a').text().replace(',', ''), 10);
+					stargazerCount = parseInt(elem.find('li.stargazers a, li.watchers a').text().replace(',', ''), 10);
 				total = total + 1;
 				forks += forkCount;
-				watchers += watcherCount;
+				starred += stargazerCount;
 				languageName = elem.find('li:first').not('.forks, .stargazers, .watchers').text();
 				if (languageName === '') {
 					languageName = 'Unknown';
@@ -57,18 +57,18 @@ var main = function () {
 						name : languageName,
 						count : 0,
 						forks : 0,
-						watchers : 0
+						starred : 0
 					};
 				}
 				languageHash[languageName].count = languageHash[languageName].count + 1;
 				languageHash[languageName].forks = languageHash[languageName].forks + forkCount;
-				languageHash[languageName].watchers = languageHash[languageName].watchers + watcherCount;
+				languageHash[languageName].starred = languageHash[languageName].starred + stargazerCount;
 			});
 
 			// Display counts
 			SKRATCHDOT.onRepoFilterDiv.find('.left').html('Now Showing <b>' + total + '</b> Repos');
 			SKRATCHDOT.onRepoFilterDiv.find('.skratchdot-count-forks').text(forks);
-			SKRATCHDOT.onRepoFilterDiv.find('.skratchdot-count-watchers').text(watchers);
+			SKRATCHDOT.onRepoFilterDiv.find('.skratchdot-count-starred').text(starred);
 			SKRATCHDOT.onRepoFilterDiv.find('table tbody').empty();
 
 			// Convert to array
@@ -92,7 +92,7 @@ var main = function () {
 					((language.count / total) * 100).toFixed(1) + ' %' +
 					'</td>' +
 					'<td align="center" style="padding-right:10px">' + language.count + '</td>' +
-					'<td align="center" style="padding-right:10px">' + language.watchers + '</td>' +
+					'<td align="center" style="padding-right:10px">' + language.starred + '</td>' +
 					'<td align="center" style="padding-right:10px">' + language.forks + '</td>' +
 					'</tr>');
 			}
@@ -115,8 +115,8 @@ var main = function () {
 				.append('<div class="left" />')
 				.append('<div class="right">' +
 					'<a class="skratchdot-languages" href="javascript:void(0)" style="font-size:.8em;padding:5px;">show languages</a>' +
-					'<span class="mini-icon mini-icon-watchers"></span>' +
-					'<span class="skratchdot-count-watchers" style="padding:0px 5px;"></span>' +
+					'<span class="mini-icon mini-icon-star"></span>' +
+					'<span class="skratchdot-count-starred" style="padding:0px 5px;"></span>' +
 					'<span class="mini-icon mini-icon-fork"></span>' +
 					'<span class="skratchdot-count-forks" style="padding:0px 5px;"></span>' +
 					'</div>')
@@ -125,7 +125,7 @@ var main = function () {
 					'<th style="padding-right:10px">Language</th>' +
 					'<th style="padding-right:10px">Usage</th>' +
 					'<th style="padding-right:10px">Repos</th>' +
-					'<th style="padding-right:10px">Watchers</th>' +
+					'<th style="padding-right:10px">Starred</th>' +
 					'<th style="padding-right:10px">Forks</th>' +
 					'</tr></thead><tbody></tbody></table>' +
 					'</div>')
