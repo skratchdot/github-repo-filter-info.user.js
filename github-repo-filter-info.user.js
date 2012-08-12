@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           GitHub Repo-Filter Info
+// @name           GitHub: Repo-Filter Info
 // @namespace      https://github.com/skratchdot/github-repo-filter-info.user.js
 // @description    A user script to display some additional info below the repository filter on a user's main GitHub page.
 // @include        https://github.com/*
@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        1.8
+// @version        1.9
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
@@ -41,10 +41,13 @@ var main = function () {
 
 			// Calculate counts
 			jQuery('ul.repo_list > li:visible').each(function (i) {
-				var elem = jQuery(this),
-					languageName = '',
-					forkCount = parseInt(elem.find('li.forks a').text().replace(',', ''), 10),
-					stargazerCount = parseInt(elem.find('li.stargazers a, li.watchers a').text().replace(',', ''), 10);
+				var elem = jQuery(this), languageName, forkCount, stargazerCount;
+				// Do nothing if we are looking at an invalid <li />
+				if (elem.find('ul.repo-stats').length === 0) {
+					return;
+				}				
+				forkCount = parseInt(elem.find('li.forks a').text().replace(',', ''), 10);
+				stargazerCount = parseInt(elem.find('li.stargazers a, li.watchers a').text().replace(',', ''), 10);
 				total = total + 1;
 				forks += forkCount;
 				starred += stargazerCount;
