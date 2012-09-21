@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        1.9
+// @version        2.0
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
@@ -17,7 +17,8 @@ var main = function () {
 	'use strict';
 
 	// Declare a namespace to store functions in
-	var SKRATCHDOT = window.SKRATCHDOT || {};
+	var SKRATCHDOT = window.SKRATCHDOT || {},
+		init;
 
 	// This will store jQuery object for the div we are injecting info into
 	SKRATCHDOT.onRepoFilterDiv = null;
@@ -45,7 +46,7 @@ var main = function () {
 				// Do nothing if we are looking at an invalid <li />
 				if (elem.find('ul.repo-stats').length === 0) {
 					return;
-				}				
+				}
 				forkCount = parseInt(elem.find('li.forks a').text().replace(',', ''), 10);
 				stargazerCount = parseInt(elem.find('li.stargazers a, li.watchers a').text().replace(',', ''), 10);
 				total = total + 1;
@@ -103,8 +104,7 @@ var main = function () {
 		}, delay);
 	};
 
-	// onDomReady : setup our page
-	jQuery(document).ready(function () {
+	init = function () {
 		// Create our information div
 		jQuery('div.js-repo-filter .filter-bar').after(
 			jQuery('<div></div>')
@@ -175,6 +175,16 @@ var main = function () {
 
 		// Simulate a filter event to "initially populate" the info div
 		SKRATCHDOT.onRepoFilter();
+	};
+
+	// onDomReady : setup our page
+	jQuery(document).ready(function () {
+		jQuery(document).on('pjax:end', function (event) {
+			if (jQuery(event.relatedTarget).parents('li[data-tab="repo"]').length > 0) {
+				init();
+			}
+		});
+		init();
 	});
 };
 
