@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        2.0
+// @version        2.1
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
@@ -41,7 +41,7 @@ var main = function () {
 				languageHash = {}, languageArray = [], languageName = '', language = {};
 
 			// Calculate counts
-			jQuery('ul.repo_list > li:visible').each(function (i) {
+			jQuery('ul.js-repo-list > li:visible').each(function (i) {
 				var elem = jQuery(this), languageName, forkCount, stargazerCount;
 				// Do nothing if we are looking at an invalid <li />
 				if (elem.find('ul.repo-stats').length === 0) {
