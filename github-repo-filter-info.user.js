@@ -8,12 +8,12 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        2.1
+// @version        2.2
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true, unparam: true, plusplus: true */
 
-var main = function () {
+(function () {
 	'use strict';
 
 	// Declare a namespace to store functions in
@@ -186,9 +186,4 @@ var main = function () {
 		});
 		init();
 	});
-};
-
-// Inject our main script
-var script = document.createElement('script');
-script.textContent = '(' + main.toString() + ')();';
-document.body.appendChild(script);
+}());
