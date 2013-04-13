@@ -11,7 +11,7 @@
 // @version        2.2
 // ==/UserScript==
 /*global jQuery */
-/*jslint browser: true, unparam: true, plusplus: true */
+/*jslint browser: true, unparam: true, plusplus: true, nomen: true */
 
 (function () {
 	'use strict';
@@ -157,7 +157,7 @@
 			// see: http://blog.jquery.com/2011/11/08/building-a-slimmer-jquery/
 			// see: https://github.com/jquery/jquery/commit/24e416dca36df4b182a612dba37f8b6cdaa25916
 			var events = jQuery._data(this, 'events');
-			if (typeof events !== 'undefined') {
+			if ('undefined' !== typeof events) {
 				jQuery.each(events, function (j, eventList) {
 					jQuery.each(eventList, function (k, event) {
 						if (event.type === 'click' || event.type === 'keyup') {
