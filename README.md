@@ -39,4 +39,11 @@ also display a language breakdown for the visible repositories.
 **Language breakdown is shown:**  
 ![After Installation - Account doesn't exist](https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/images/after2.png)  
 
-  
+
+### Credits ###
+
+Pie Chart is being drawn with the help of:
+
+- [d3](http://d3js.org/)
+- [d3.ay-pie-chart.js](https://github.com/gajus/pie-chart)
+
