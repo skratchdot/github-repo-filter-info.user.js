@@ -9,7 +9,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
 // @updateURL      https://github.com/skratchdot/github-repo-filter-info.user.js/raw/master/github-repo-filter-info.user.js
-// @version        2.3
+// @version        2.4
 // ==/UserScript==
 /*global jQuery, ay */
 /*jslint browser: true, unparam: true, plusplus: true, nomen: true */
@@ -185,9 +185,9 @@
 				.append('<div class="left" />')
 				.append('<div class="right">' +
 					'<a class="skratchdot-languages" href="javascript:void(0)" style="font-size:.8em;padding:5px;">show languages</a>' +
-					'<span class="mini-icon mini-icon-star"></span>' +
+					'<span class="octicon octicon-star"></span>' +
 					'<span class="skratchdot-count-starred" style="padding:0px 5px;"></span>' +
-					'<span class="mini-icon mini-icon-fork"></span>' +
+					'&nbsp;<span class="octicon octicon-git-branch"></span>' +
 					'<span class="skratchdot-count-forks" style="padding:0px 5px;"></span>' +
 					'</div>')
 				.append('<div class="show-hide" style="clear:both;">' +
